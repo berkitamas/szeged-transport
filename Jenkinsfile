@@ -27,6 +27,5 @@ pipeline {
         sh 'docker build -t thomastopies/szeged-transport .'
       }
     }
-    stage('Push Project')
   }
 }
