@@ -1,11 +1,12 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:alpine'
-    }
-  }
+  agent none
   stages {
     stage('Checkout code') {
+      agent {
+        docker {
+          image 'node:alpine'
+        }
+      }
       steps {
         script {
           def scmVars = checkout(scm)
@@ -15,15 +16,38 @@ pipeline {
       }
     }
     stage('Install dependencies') {
+      agent {
+        docker {
+          image 'node:alpine'
+        }
+      }
       steps {
         echo "${env.DOCKER_LABEL}"
         sh 'npm install'
-        sh 'npm install -g @angular/cli'
+        sh 'npm install @angular/cli'
+        stash name: 'node_project'
       }
     }
     stage('Build Project') {
+      agent {
+        docker {
+          image 'node:alpine'
+        }
+      }
       steps {
+        unstash 'node_project'
         sh 'npm run build-prod'
+        stash includes: 'dist/**', name: 'builded_project'
+      }
+    }
+    stage('Docker operations') {
+      agent {
+        docker {
+          image 'docker:18-dind'
+        }
+      }
+      steps {
+        unstash 'builded project'
         sh 'docker build -t thomastopies/szeged-transport .'
       }
     }
