@@ -36,7 +36,7 @@ pipeline {
       steps {
         unstash 'node_project'
         sh 'npm run build-prod'
-        stash includes: 'dist/**', name: 'builded_project'
+        stash includes: 'dist/**, nginx.conf', name: 'builded_project'
       }
     }
     stage('Docker operations') {
