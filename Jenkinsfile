@@ -36,7 +36,8 @@ pipeline {
       steps {
         unstash 'node_project'
         sh 'npm run build-prod'
-        stash includes: 'dist/**, nginx.conf', name: 'builded_project'
+        stash includes: 'dist/**', name: 'builded_project'
+        stash includes: 'nginx.conf', name: 'nginx_config'
       }
     }
     stage('Docker operations') {
@@ -44,6 +45,7 @@ pipeline {
       steps {
         script {
           unstash 'builded_project'
+          unstash 'nginx_config'
           def image = docker.build("thomastopies/szeged-transport:${env.DOCKER_LABEL}")
           docker.withRegistry( '', 'docker-hub' ) {
             image.push()
