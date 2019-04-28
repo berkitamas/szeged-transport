@@ -54,5 +54,13 @@ pipeline {
         }
       }
     }
+    stage('Docker-compose rebuild') {
+      agent any
+      steps {
+        script {
+          sh 'docker-compose -f /var/jenkins_home/docker-compose/btj/docker-compose.yml up -d --no-deps --force-recreate webfejl'
+        }
+      }
+    }
   }
 }
