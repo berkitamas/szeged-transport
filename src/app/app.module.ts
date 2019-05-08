@@ -11,6 +11,10 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { NotFoundComponent } from './error/not-found/not-found.component';
 import { RootComponent } from './root/root.component';
 import { ContactComponent } from './contact/contact.component';
+import {HttpClientModule} from '@angular/common/http';
+import {RouteService} from './core/services/route.service';
+import { RouteComponent } from './route/route.component';
+import { StopSearchComponent } from './stop-search/stop-search.component';
 
 @NgModule({
   declarations: [
@@ -19,16 +23,21 @@ import { ContactComponent } from './contact/contact.component';
     SidebarNavComponent,
     NotFoundComponent,
     RootComponent,
-    ContactComponent
+    ContactComponent,
+    RouteComponent,
+    StopSearchComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
     FlexLayoutModule,
+    HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    RouteService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

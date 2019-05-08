@@ -3,11 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import {NotFoundComponent} from './error/not-found/not-found.component';
 import {RootComponent} from './root/root.component';
 import {ContactComponent} from './contact/contact.component';
+import {RouteComponent} from './route/route.component';
+import {StopSearchComponent} from './stop-search/stop-search.component';
 
 const routes: Routes = [
   { path: 'home', component: RootComponent },
   { path: '', component: RootComponent },
   { path: 'contact', component: ContactComponent},
+  { path: 'routes/:id', component: RouteComponent },
+  { path: 'stops', component: StopSearchComponent },
   { path: '**', component: NotFoundComponent}
 ];
 

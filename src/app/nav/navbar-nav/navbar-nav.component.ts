@@ -12,9 +12,7 @@ export class NavbarNavComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.items);
-  }
+  ngOnInit() { }
 
   toggleButton() {
     this.sidenav.toggle();
