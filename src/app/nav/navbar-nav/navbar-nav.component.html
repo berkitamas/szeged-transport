@@ -1,0 +1,9 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleButton()" fxHide.gt-xs><mat-icon>menu</mat-icon></button>
+  <button mat-button class="brand" routerLink="/"><mat-icon>directions_bus</mat-icon>Szeged Transport</button>
+  <nav fxFlex fxLayoutAlign="flex-end" fxLayoutGap="15px" fxHide.xs>
+    <div *ngFor="let item of items">
+      <button mat-button [routerLink]="item.route">{{ item.name }}</button>
+    </div>
+  </nav>
+</mat-toolbar>

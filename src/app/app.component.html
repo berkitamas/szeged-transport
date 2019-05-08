@@ -1,5 +1,9 @@
-<mat-toolbar>
-  <span>Szeged Transport</span>
-</mat-toolbar>
-
-<router-outlet></router-outlet>
+<mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav>
+      <app-sidebar-nav [items]="navItems" [sidenav]="sidenav" ></app-sidebar-nav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-navbar-nav [items]="navItems" [sidenav]="sidenav" ></app-navbar-nav>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
