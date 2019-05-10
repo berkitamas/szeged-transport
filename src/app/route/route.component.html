@@ -55,12 +55,12 @@
         <mat-accordion *ngIf="stops.length > 0; else noStop">
           <mat-expansion-panel *ngFor="let stop of stops">
             <mat-expansion-panel-header>
-              <mat-panel-title>
+              <mat-panel-title fxFlex="10">
                 <div [appTimeCounter]="stop.arrivalTime" (value)="time[stop.currentStop.id*stop.arrivalTime.getTime()] = $event">
                   <button mat-flat-button disabled> {{ time[stop.currentStop.id*stop.arrivalTime.getTime()] | date:'mm:ss' }} </button>
                 </div>
               </mat-panel-title>
-              <mat-panel-description>
+              <mat-panel-description fxFlex="grow">
                 <a mat-button [routerLink]="'/stops/' + stop.currentStop.id">{{ stop.currentStop.name }}</a>
               </mat-panel-description>
             </mat-expansion-panel-header>
@@ -72,7 +72,7 @@
             <ng-template #tripEnd>
               <p>A járat végállomáshoz ért!</p>
             </ng-template>
-            A járat {{ stop.tripStart.name }} megállótól {{ stop.tripEnd.name }} megállóig közlekedik!
+            A járat <a [routerLink]="'/stops/' + stop.tripStart.id">{{ stop.tripStart.name }}</a> megállótól <a [routerLink]="'/stops/' + stop.tripEnd.id">{{ stop.tripEnd.name }}</a> megállóig közlekedik!
           </mat-expansion-panel>
         </mat-accordion>
         <ng-template #noStop>

@@ -50,14 +50,15 @@
         <mat-accordion *ngIf="stops.length > 0; else noStop">
           <mat-expansion-panel *ngFor="let routeStop of stops">
             <mat-expansion-panel-header>
-              <mat-panel-title>
+              <mat-panel-title fxFlex="10">
                 <div [appTimeCounter]="routeStop.arrivalTime" (value)="time[routeStop.route.id*routeStop.arrivalTime.getTime()] = $event">
                   <button mat-flat-button disabled> {{ time[routeStop.route.id*routeStop.arrivalTime.getTime()] | date:'mm:ss' }} </button>
                 </div>
               </mat-panel-title>
-              <mat-panel-description>
+              <mat-panel-description fxFlex="grow">
                 <!--suppress AngularInvalidExpressionResultType -->
-                <a [routerLink]="'/routes/' + routeStop.route.id" [color]="getClassFromTransportType(routeStop.route.type)"  mat-button>{{ routeStop.route.shortName }}</a> <span>{{routeStop.route.longName}}</span>
+                <a [routerLink]="'/routes/' + routeStop.route.id" [color]="getClassFromTransportType(routeStop.route.type)"  mat-button>{{ routeStop.route.shortName }}</a>
+                <span>{{routeStop.tripStart.name}} <mat-icon>arrow_right_alt</mat-icon> {{ routeStop.tripEnd.name }}</span>
               </mat-panel-description>
             </mat-expansion-panel-header>
             <p>Érkezik: {{ routeStop.arrivalTime.toLocaleTimeString() }}</p>
@@ -68,7 +69,7 @@
             <ng-template #tripEnd>
               <p>A járat végállomáshoz ért!</p>
             </ng-template>
-            A járat {{ routeStop.tripStart.name }} megállótól {{ routeStop.tripEnd.name }} megállóig közlekedik!
+            A járat <a [routerLink]="'/stops/' + routeStop.tripStart.id">{{ routeStop.tripStart.name }}</a> megállótól <a [routerLink]="'/stops/' + routeStop.tripEnd.id">{{ routeStop.tripEnd.name }}</a> megállóig közlekedik!
           </mat-expansion-panel>
         </mat-accordion>
         <ng-template #noStop>
