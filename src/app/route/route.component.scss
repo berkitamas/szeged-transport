@@ -30,6 +30,12 @@ mat-nav-list button {
   margin-right: 10px;
 }
 
+mat-nav-list span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 mat-tab-group {
   height: 220px;
   overflow: auto;
@@ -68,3 +74,10 @@ mat-expansion-panel a:hover {
 mat-expansion-panel a:active {
   color: #2980b9;
 }
+
+.min-offset {
+  color: #aaa;
+  font-size: .8em;
+  text-align: right;
+}
+

@@ -77,7 +77,13 @@ export class RouteService {
           description: value.desc,
           occasional: (+value.occasional === 1),
           agency: new Agency(value.agency),
-          stops: value.stops.map(stop => new Stop(stop))
+          stops: value.stops.map(stop => new Stop({
+            id: stop.id,
+            name: stop.name,
+            lat: stop.lat,
+            lon: stop.lon,
+            minOffset: stop.min_offset
+          }))
         });
       }));
   }

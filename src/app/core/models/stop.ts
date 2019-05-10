@@ -5,6 +5,7 @@ export class Stop {
   name: string;
   lat: string;
   lon: string;
+  minOffset: number;
   routes: Route[];
 
   constructor(data: Partial<Stop>) {

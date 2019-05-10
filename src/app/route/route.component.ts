@@ -36,5 +36,4 @@ export class RouteComponent implements OnInit {
       case TransportType.UNKNOWN: return '';
     }
   }
-
 }

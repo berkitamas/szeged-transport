@@ -16,7 +16,7 @@
           <div *ngIf="route.stops[0].name === route.stops[route.stops.length - 1].name; else notCircular">
             <mat-nav-list class="circular">
               <div *ngFor="let stop of route.stops; let i = index" [attr.data-index]="i">
-                <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> {{ stop.name }}</a>
+                <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button><span fxFlex="80">{{ stop.name }}</span><span class="min-offset" fxFlex="grow">+{{ stop.minOffset }} perc</span></a>
               </div>
             </mat-nav-list>
           </div>
@@ -25,14 +25,14 @@
               <mat-tab label="Oda">
                 <mat-nav-list>
                   <div *ngFor="let stop of route.stops; let i = index" [attr.data-index]="i">
-                    <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> {{ stop.name }}</a>
+                    <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button><span fxFlex="80">{{ stop.name }}</span><span class="min-offset" fxFlex="grow">+{{ stop.minOffset }} perc</span></a>
                   </div>
                 </mat-nav-list>
               </mat-tab>
               <mat-tab label="Vissza">
                 <mat-nav-list>
                   <div *ngFor="let stop of route.stops.slice().reverse(); let i = index" [attr.data-index]="i">
-                    <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> {{ stop.name }}</a>
+                    <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> <span fxFlex="80">{{ stop.name }}</span> <span fxFlex="grow"></span><span class="min-offset" fxFlex="grow">+{{ route.stops[route.stops.length - 1].minOffset - stop.minOffset }} perc</span></a>
                   </div>
                 </mat-nav-list>
               </mat-tab>
