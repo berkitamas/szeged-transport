@@ -1,0 +1,36 @@
+h2.title {
+  margin: 20px 30px 10px;
+}
+
+agm-map {
+  height: 300px;
+  width: 100%;
+}
+
+.route {
+  line-height: 40px;
+  width: 50px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-top: 10px;
+  color: white;
+}
+
+.tram, .mat-tram {
+  background-color: #f1c40f;
+}
+
+.trolley, .mat-trolley {
+  background-color: #2ecc71;
+}
+
+
+.bus, .mat-bus {
+  background-color: #2980b9;
+}
+
+mat-panel-description span {
+  line-height: 36px;
+  padding-left: 10px;
+}

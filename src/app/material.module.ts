@@ -4,7 +4,7 @@ import {
   MatButtonModule,
   MatCardModule, MatCheckboxModule, MatChipsModule, MatExpansionModule, MatGridListModule,
   MatIconModule,
-  MatListModule,
+  MatListModule, MatProgressSpinnerModule,
   MatSidenavModule,
   MatTabsModule,
   MatToolbarModule
@@ -23,7 +23,8 @@ import {
     MatBadgeModule,
     MatChipsModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatToolbarModule,
@@ -37,7 +38,8 @@ import {
     MatBadgeModule,
     MatChipsModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule { }

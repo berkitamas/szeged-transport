@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AgencyService} from '../core/services/agency.service';
+import {Observable} from 'rxjs';
+import {Agency} from '../core/models/agency';
 
 @Component({
   selector: 'app-contact',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  agencies$: Observable<Agency[]>;
+
+  constructor(private agencyService: AgencyService) { }
 
   ngOnInit() {
+    this.agencies$ = this.agencyService.getAgencies();
   }
 
 }

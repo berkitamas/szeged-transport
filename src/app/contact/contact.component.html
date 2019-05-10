@@ -1,3 +1,23 @@
-<p>
-  contact works!
-</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Kapcsolat</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Készítette: <a href="https://edu.btj.hu">Berki Tamás József</a></p>
+    <p>E-mail: <a href="mailto:Berki.Tamas.Jozsef@stud.u-szeged.hu">Berki.Tamas.Jozsef@stud.u-szeged.hu</a></p>
+    <h2>Közlekedési társaságok elérhetőségei</h2>
+    <mat-accordion *ngIf="agencies$ | async as agencies; else loadingPage">
+      <mat-expansion-panel *ngFor="let agency of agencies">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ agency.name }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <h4>Telefon: {{ agency.phone }}</h4>
+        <!--suppress HtmlUnknownTarget -->
+        <a href="{{ agency.url }}">{{ agency.url }}</a>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <ng-template #loadingPage>
+      <app-loading></app-loading>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

@@ -18,6 +18,10 @@ import { StopSearchComponent } from './stop-search/stop-search.component';
 import {AgmCoreModule} from '@agm/core';
 import { TimeCounterDirective } from './core/directives/time-counter.directive';
 import {FormsModule} from '@angular/forms';
+import { FooterComponent } from './footer/footer.component';
+import { RouteSearchComponent } from './route-search/route-search.component';
+import { StopComponent } from './stop/stop.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import {FormsModule} from '@angular/forms';
     ContactComponent,
     RouteComponent,
     StopSearchComponent,
-    TimeCounterDirective
+    TimeCounterDirective,
+    FooterComponent,
+    RouteSearchComponent,
+    StopComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

@@ -3,8 +3,7 @@ import {RouteService} from '../core/services/route.service';
 import {Observable} from 'rxjs';
 import {Route} from '../core/models/route';
 import {ActivatedRoute} from '@angular/router';
-import {switchMap, tap} from 'rxjs/operators';
-import {BreakpointObserver} from '@angular/cdk/layout';
+import {switchMap} from 'rxjs/operators';
 import {TransportType} from '../core/models/transport-type';
 import {StopTime} from '../core/models/stop-time';
 
@@ -15,23 +14,18 @@ import {StopTime} from '../core/models/stop-time';
 })
 export class RouteComponent implements OnInit {
 
-  private isSmallScreen;
   route$: Observable<Route>;
   currentStops$: Observable<StopTime[]>;
   time: Date[] = [];
 
-  constructor(private routeService: RouteService, private route: ActivatedRoute, breakpointObserver: BreakpointObserver) {
-    breakpointObserver.observe([
-      '(max-width: 980px)'
-    ]).subscribe(result => {
-      this.isSmallScreen = result.matches;
-    });
-  }
+  constructor(private routeService: RouteService, private route: ActivatedRoute) {}
 
 
   ngOnInit() {
-    this.route$ = this.route.params.pipe(switchMap(params => this.routeService.getRouteByID(+params.id).pipe(tap(console.log))));
-    this.currentStops$ = this.route.params.pipe(switchMap(params => this.routeService.getCurrentStopsByRoute(+params.id)));
+    this.route$ = this.route.params
+      .pipe(switchMap(params => this.routeService.getRouteByID(+params.id)));
+    this.currentStops$ = this.route.params
+      .pipe(switchMap(params => this.routeService.getCurrentStopsByRoute(+params.id)));
   }
 
   transportTypeToName(type: TransportType): string {
