@@ -1,0 +1,24 @@
+.container {
+  margin: 0 30px;
+
+  .content {
+    background-color: #e74c3c;
+    color: #ffffff;
+    font-size: 4em;
+    line-height: 200px;
+    max-width: 500px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px auto;
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: normal;
+    margin-bottom: 100px;
+  }
+
+  mat-icon {
+    margin-right: 20px;
+  }
+}
