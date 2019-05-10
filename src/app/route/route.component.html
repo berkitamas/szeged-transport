@@ -31,7 +31,7 @@
               </mat-tab>
               <mat-tab label="Vissza">
                 <mat-nav-list>
-                  <div *ngFor="let stop of route.stops.reverse(); let i = index" [attr.data-index]="i">
+                  <div *ngFor="let stop of route.stops.slice().reverse(); let i = index" [attr.data-index]="i">
                     <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> {{ stop.name }}</a>
                   </div>
                 </mat-nav-list>
