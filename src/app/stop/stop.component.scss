@@ -30,12 +30,32 @@ agm-map {
   background-color: #2980b9;
 }
 
+mat-expansion-panel mat-panel-description a {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.2em;
+  width: 50px;
+}
+
 mat-panel-description span {
-  line-height: 34px;
+  line-height: 36px;
   padding-left: 10px;
 }
 
 mat-panel-description mat-icon {
   margin: 0 10px;
   vertical-align: middle;
+}
+
+mat-expansion-panel a {
+  color: #888;
+  transition: color .3s;
+}
+
+mat-expansion-panel a:hover {
+  color: #3498db;
+}
+
+mat-expansion-panel a:active {
+  color: #2980b9;
 }
