@@ -4,6 +4,9 @@ import {Observable} from 'rxjs';
 import {Route} from '../core/models/route';
 import {ActivatedRoute} from '@angular/router';
 import {switchMap, tap} from 'rxjs/operators';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import {TransportType} from '../core/models/transport-type';
+import {StopTime} from '../core/models/stop-time';
 
 @Component({
   selector: 'app-route',
@@ -12,13 +15,32 @@ import {switchMap, tap} from 'rxjs/operators';
 })
 export class RouteComponent implements OnInit {
 
-  constructor(private routeService: RouteService, private route: ActivatedRoute) { }
-
+  private isSmallScreen;
   route$: Observable<Route>;
+  currentStops$: Observable<StopTime[]>;
+  time: Date[] = [];
+
+  constructor(private routeService: RouteService, private route: ActivatedRoute, breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe([
+      '(max-width: 980px)'
+    ]).subscribe(result => {
+      this.isSmallScreen = result.matches;
+    });
+  }
+
 
   ngOnInit() {
-    this.route$ = this.route.params.pipe(switchMap(params => this.routeService.getRouteByID(+params.id)))
-      .pipe(tap(console.log));
+    this.route$ = this.route.params.pipe(switchMap(params => this.routeService.getRouteByID(+params.id).pipe(tap(console.log))));
+    this.currentStops$ = this.route.params.pipe(switchMap(params => this.routeService.getCurrentStopsByRoute(+params.id)));
+  }
+
+  transportTypeToName(type: TransportType): string {
+    switch (type) {
+      case TransportType.BUS: return 'Busz';
+      case TransportType.TRAM: return 'Villamos';
+      case TransportType.TROLLEY: return 'Trolibusz';
+      case TransportType.UNKNOWN: return '';
+    }
   }
 
 }

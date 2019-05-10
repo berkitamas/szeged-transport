@@ -15,6 +15,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouteService} from './core/services/route.service';
 import { RouteComponent } from './route/route.component';
 import { StopSearchComponent } from './stop-search/stop-search.component';
+import {AgmCoreModule} from '@agm/core';
+import { TimeCounterDirective } from './core/directives/time-counter.directive';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import { StopSearchComponent } from './stop-search/stop-search.component';
     RootComponent,
     ContactComponent,
     RouteComponent,
-    StopSearchComponent
+    StopSearchComponent,
+    TimeCounterDirective
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,10 @@ import { StopSearchComponent } from './stop-search/stop-search.component';
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAcsNk5FNfk-QksDo--9PyJs4dfjTWBMEk'
+    }),
     BrowserAnimationsModule
   ],
   providers: [

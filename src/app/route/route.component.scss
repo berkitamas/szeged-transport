@@ -1,0 +1,53 @@
+@import '~@angular/material/theming';
+
+h2.title {
+  margin: 20px 30px 10px;
+
+  .occasional {
+    background-color: rgba(41, 128, 185, 0.8);
+    font-size: .7em;
+    line-height: 30px;
+    margin: 0 10px;
+    padding: 0 10px;
+    color: #ffffff;
+    border-radius: 20px;
+    display: inline-block;
+  }
+}
+
+h3.title {
+  margin: 0 30px 20px;
+  color: #999;
+}
+
+mat-nav-list.circular {
+  flex-grow:1;
+  height:220px;
+  overflow: auto;
+}
+
+mat-nav-list button {
+  margin-right: 10px;
+}
+
+mat-tab-group {
+  height: 220px;
+  overflow: auto;
+}
+
+agm-map {
+  height: 300px;
+  width: 100%;
+}
+
+.flex-item {
+  margin-bottom: 10px;
+
+  h2 {
+    margin-left: 0;
+  }
+}
+
+.agency mat-card-content {
+  margin: 16px;
+}

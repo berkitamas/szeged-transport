@@ -2,10 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Route} from '../models/route';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Observable, timer} from 'rxjs';
+import {concatMap, map} from 'rxjs/operators';
 import {TransportType} from '../models/transport-type';
 import {Agency} from '../models/agency';
+import {Stop} from '../models/stop';
+import {StopTime} from '../models/stop-time';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +23,8 @@ export class RouteService {
 
   constructor(private http: HttpClient) { }
 
-  getRoutes(): Observable<Route[]> {
-    return this.http.get(this.apiUrl + '/routes', this.httpOptions)
+  getRoutes( occasional: boolean): Observable<Route[]> {
+    return this.http.get(this.apiUrl + '/routes' + (occasional ? '?occasional' : ''), this.httpOptions)
       .pipe(map((array: any[]) => array.map(value => {
         let type: TransportType;
         switch (value.type) {
@@ -43,7 +45,8 @@ export class RouteService {
           id: value.id,
           type,
           shortName: value.short_name,
-          longName: value.long_name
+          longName: value.long_name,
+          occasional: value.occasional === 1
         });
       })));
   }
@@ -73,9 +76,25 @@ export class RouteService {
           type,
           description: value.desc,
           occasional: (+value.occasional === 1),
-          agency: new Agency(value.agency)
+          agency: new Agency(value.agency),
+          stops: value.stops.map(stop => new Stop(stop))
         });
       }));
+  }
+
+  getCurrentStopsByRoute(id: number): Observable<StopTime[]> {
+    return timer(0, 30000)
+      .pipe(concatMap(() => this.http.get(this.apiUrl + '/routes/' + id + '/next-stops?time=' + Math.round(Date.now() / 1000))))
+      .pipe(map((array: any[]) => array.map(stop => {
+        return new StopTime({
+          arrivalTime: new Date(new Date().toISOString().slice(0, 11) + stop.arrival_time + 'Z'),
+          departureTime: new Date(new Date().toISOString().slice(0, 11) + stop.departure_time + 'Z'),
+          currentStop: new Stop(stop.current_stop),
+          nextStop: (stop.next_stop) ? new Stop(stop.next_stop) : null,
+          tripStart: new Stop(stop.trip_start),
+          tripEnd: new Stop(stop.trip_end)
+        });
+      })));
   }
 
 }

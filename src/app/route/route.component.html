@@ -1,3 +1,97 @@
 <div *ngIf="route$ | async as route">
-  {{ route.longName }}
+  <h2 class="title">
+    {{ transportTypeToName(route.type) }} járat {{route.shortName}} ({{ route.longName }})
+    <span class="occasional" *ngIf="route.occasional">Különjárat</span>
+  </h2>
+  <h3 class="title" *ngIf="route.description.length > 0">
+    {{ route.description }}
+  </h3>
+  <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center">
+    <div fxFlex.gt-sm="30" fxFlex.lt-md="100" class="flex-item">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Megállók</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="route.stops[0].name === route.stops[route.stops.length - 1].name; else notCircular">
+            <mat-nav-list class="circular">
+              <div *ngFor="let stop of route.stops; let i = index" [attr.data-index]="i">
+                <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> {{ stop.name }}</a>
+              </div>
+            </mat-nav-list>
+          </div>
+          <ng-template #notCircular>
+            <mat-tab-group mat-stretch-tabs>
+              <mat-tab label="Oda">
+                <mat-nav-list>
+                  <div *ngFor="let stop of route.stops; let i = index" [attr.data-index]="i">
+                    <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> {{ stop.name }}</a>
+                  </div>
+                </mat-nav-list>
+              </mat-tab>
+              <mat-tab label="Vissza">
+                <mat-nav-list>
+                  <div *ngFor="let stop of route.stops.reverse(); let i = index" [attr.data-index]="i">
+                    <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> {{ stop.name }}</a>
+                  </div>
+                </mat-nav-list>
+              </mat-tab>
+            </mat-tab-group>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex.gt-sm="60" fxFlex.lt-md="100" class="flex-item">
+      <agm-map [zoom]="12" [latitude]="46.251984" [longitude]="20.152332">
+        <agm-marker *ngFor="let stop of route.stops"
+                    [latitude]="stop.lat" [longitude]="stop.lon"
+                    [agmFitBounds]="true">
+        </agm-marker>
+      </agm-map>
+    </div>
+    <div fxFlex.gt-sm="60" fxFlex.lt-md="100" class="flex-item">
+      <div *ngIf="currentStops$ | async as stops">
+        <h2>Következő megállók (5 perc)</h2>
+        <mat-accordion *ngIf="stops.length > 0; else noStop">
+          <mat-expansion-panel *ngFor="let stop of stops">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div [appTimeCounter]="stop.arrivalTime" (value)="time[stop.currentStop.id] = $event">
+                  <button mat-flat-button disabled> {{ time[stop.currentStop.id] | date:'mm:ss' }} </button>
+                </div>
+              </mat-panel-title>
+              <mat-panel-description>
+                <a mat-button [routerLink]="'/stops/' + stop.currentStop.id">{{ stop.currentStop.name }}</a>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Érkezik: {{ stop.arrivalTime.toLocaleTimeString() }}</p>
+            <p>Elindul: {{ stop.departureTime.toLocaleTimeString() }}</p>
+            <p *ngIf="stop.nextStop; else tripEnd">
+              Kővetkező megálló: <a [routerLink]="'/stops/' + stop.nextStop.id">{{ stop.nextStop.name }}</a>
+            </p>
+            <ng-template #tripEnd>
+              <p>A járat végállomáshoz ért!</p>
+            </ng-template>
+            A járat {{ stop.tripStart.name }} megállótól {{ stop.tripEnd.name }} megállóig közlekedik!
+          </mat-expansion-panel>
+        </mat-accordion>
+        <ng-template #noStop>
+          <p>A járat nem fog megállót érinteni a következő öt percben!</p>
+        </ng-template>
+      </div>
+    </div>
+    <div fxFlex.gt-sm="30" fxFlex.lt-md="100" class="flex-item">
+      <mat-card class="agency">
+        <mat-card-header>
+          <mat-card-title>Üzemeltető</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h3>{{ route.agency.name }}</h3>
+          <h4>Telefon: {{ route.agency.phone }}</h4>
+          <!--suppress HtmlUnknownTarget -->
+          <a href="{{ route.agency.url }}">{{ route.agency.url }}</a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>
