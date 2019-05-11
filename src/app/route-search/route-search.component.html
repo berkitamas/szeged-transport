@@ -73,7 +73,7 @@
   </mat-card-header>
   <mat-card-content>
     <mat-nav-list *ngFor="let route of searchResults">
-      <a mat-list-item [routerLink]="'/routes/' + route.id"><span [ngClass]="['route', getClassFromTransportType(route.type)]">{{route.shortName}}</span>{{route.longName}}</a>
+      <a mat-list-item [routerLink]="'/routes/' + route.id"><span [ngClass]="['route', getClassFromTransportType(route.type)]">{{route.shortName}}</span>{{route.longName}}<span class="occasional" *ngIf="route.occasional">Különjárat</span></a>
     </mat-nav-list>
   </mat-card-content>
 </mat-card>
