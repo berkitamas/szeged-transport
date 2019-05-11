@@ -8,7 +8,7 @@
   </mat-card-header>
   <mat-card-content>
     <mat-checkbox [(ngModel)]="occasional" (change)="occasionalCheck()">Tartalmazza a különjáratokat</mat-checkbox>
-    <mat-tab-group *ngIf="trams; else loadingPage">
+    <mat-tab-group *ngIf="trams; else loadingPage" mat-stretch-tabs>
       <mat-tab label="Villamos">
         <div fxLayout="row wrap" fxLayoutGap="30px" fxLayoutAlign="start center">
           <div *ngFor="let route of trams">

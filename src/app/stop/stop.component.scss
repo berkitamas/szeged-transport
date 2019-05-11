@@ -7,6 +7,10 @@ agm-map {
   width: 100%;
 }
 
+.flex {
+  margin-left: 10px;
+}
+
 .route {
   line-height: 40px;
   width: 50px;
@@ -30,11 +34,35 @@ agm-map {
   background-color: #2980b9;
 }
 
+.flex-item {
+  margin-bottom: 10px;
+
+  h2 {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 959px) {
+  .flex {
+    margin-right: 10px;
+  }
+
+  .flex-item {
+    margin-top: 10px;
+  }
+}
+
+mat-panel-description {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 mat-expansion-panel mat-panel-description a {
   color: #ffffff;
   font-weight: bold;
   font-size: 1.2em;
   width: 50px;
+  margin-left: 50px;
 }
 
 mat-panel-description span {

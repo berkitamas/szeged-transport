@@ -46,11 +46,25 @@ agm-map {
   width: 100%;
 }
 
+.flex {
+  margin-left: 10px;
+}
+
 .flex-item {
   margin-bottom: 10px;
 
   h2 {
     margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 959px) {
+  .flex {
+    margin-right: 10px;
+  }
+
+  .flex-item {
+    margin-top: 10px;
   }
 }
 
@@ -60,6 +74,9 @@ agm-map {
 
 mat-expansion-panel mat-panel-description a {
   color: #444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 70px;
 }
 
 mat-expansion-panel a {

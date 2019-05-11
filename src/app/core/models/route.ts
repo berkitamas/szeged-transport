@@ -10,7 +10,8 @@ export class Route {
   description: string;
   occasional: boolean;
   agency: Agency;
-  stops: Stop[];
+  stopsFrom: Stop[];
+  stopsTo: Stop[];
 
   constructor(data: Partial<Route>) {
     Object.assign(this, data);

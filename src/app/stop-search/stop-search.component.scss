@@ -1,0 +1,57 @@
+mat-card {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 552px) {
+  mat-card {
+    margin: 0 10px;
+  }
+}
+
+mat-card.search {
+  margin-top: 30px;
+}
+
+mat-card.results {
+  margin-top: 10px;
+}
+
+.mat-option-loading mat-spinner {
+  margin: 0 auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.route {
+  display: inline-block;
+  line-height: 30px;
+  width: 50px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1em;
+  margin-top: 10px;
+  color: white;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.tram, .mat-tram {
+  color: #ffffff;
+  background-color: #f1c40f;
+}
+
+.trolley, .mat-trolley {
+  color: #ffffff;
+
+  background-color: #2ecc71;
+}
+
+
+.bus, .mat-bus {
+  color: #ffffff;
+  background-color: #2980b9;
+}
+

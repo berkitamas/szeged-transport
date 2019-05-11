@@ -1,3 +1,56 @@
-<p>
-  stop-search works!
-</p>
+<mat-card class="search">
+  <mat-card-header>
+    <mat-card-title>Megállók keresése</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="stopSearchForm" (ngSubmit)="submitSearch()">
+      <mat-form-field>
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <input matInput formControlName="stopName" placeholder="Megálló neve" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-chip-list #routeList>
+          <!--suppress AngularInvalidExpressionResultType -->
+          <mat-chip
+            *ngFor="let route of selectedRoutes"
+            [selectable]="false"
+            [removable]="true"
+            (removed)="removeRouteFromList(route)"
+            [color]="getClassFromTransportType(route.type)"
+          >
+            {{route.shortName}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <!--suppress HtmlFormInputWithoutLabel -->
+          <input
+            placeholder="Érintett járatok"
+            #routeInput
+            formControlName="routePickInput"
+            [matAutocomplete]="routePickAuto"
+            [matChipInputFor]="routeList"
+            [matChipInputSeparatorKeyCodes]="separatorKeyCodes">
+        </mat-chip-list>
+        <mat-autocomplete #routePickAuto="matAutocomplete" (optionSelected)="selectRoute($event)">
+          <mat-option *ngIf="loadingRoute" class="mat-option-loading"><mat-spinner diameter="40"></mat-spinner></mat-option>
+          <ng-container *ngIf="!loadingRoute">
+            <mat-option *ngFor="let route of filteredRoutes" [value]="route">
+              <span [ngClass]="['route', getClassFromTransportType(route.type)]">{{route.shortName}}</span>{{route.longName}}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary">Keresés</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+<mat-card class="results" *ngIf="searchResults$ | async as searchResults">
+  <mat-card-header>
+    <mat-card-title>Keresési találatok</mat-card-title>
+    <mat-card-subtitle>{{ searchResults.length }} darab</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-nav-list *ngFor="let stop of searchResults">
+      <a mat-list-item [routerLink]="'/stops/' + stop.id">{{ stop.name }}</a>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>

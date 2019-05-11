@@ -16,9 +16,15 @@
   }
 }
 
-.mat-card {
+mat-card {
   margin: 20px auto 0;
-  max-width: 510px;
+  max-width: 500px;
+}
+
+@media only screen and (max-width: 552px) {
+  mat-card {
+    margin: 20px 10px 0;
+  }
 }
 
 .route {

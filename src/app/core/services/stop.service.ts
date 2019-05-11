@@ -8,12 +8,13 @@ import {Route} from '../models/route';
 import {TransportType} from '../models/transport-type';
 import {Agency} from '../models/agency';
 import {StopTime} from '../models/stop-time';
+import {StopSearch} from '../models/stop-search';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StopService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl + '/stops/';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -23,7 +24,7 @@ export class StopService {
   constructor(private http: HttpClient) { }
 
   getStopByID(id: number, occasional: boolean = false): Observable<Stop> {
-    return this.http.get(this.apiUrl + '/stops/' + id + (occasional ? '?occasional' : ''), this.httpOptions)
+    return this.http.get(this.apiUrl + id + (occasional ? '?occasional' : ''), this.httpOptions)
       .pipe(map((value: any) => {
         value.routes = value.routes.map(route => {
           let type: TransportType;
@@ -55,9 +56,30 @@ export class StopService {
       }));
   }
 
+  searchStops(search: StopSearch): Observable<Stop[]> {
+    let query = '';
+
+    if (search.routes && search.routes.length > 0) {
+      const routeString = search.routes.map(route => route.id).join(',');
+      query = '?routes=' + routeString;
+    }
+
+    if (search.name !== '') {
+      if (query === '') {
+        query = '?';
+      } else {
+        query += '&';
+      }
+      query += 'name=' + search.name;
+    }
+
+    return this.http.get(this.apiUrl + 'search' + query, this.httpOptions)
+      .pipe(map((array: any[]) => array.map(value => new Stop(value))));
+  }
+
   getCurrentRoutesByStops(id: number): Observable<StopTime[]> {
     return timer(0, 30000)
-      .pipe(concatMap(() => this.http.get(this.apiUrl + '/stops/' + id + '/next-routes?time=' + Math.round(Date.now() / 1000))))
+      .pipe(concatMap(() => this.http.get(this.apiUrl + id + '/next-routes?time=' + Math.round(Date.now() / 1000))))
       .pipe(map((array: any[]) => array.map(route => {
         let type: TransportType;
         switch (route.type) {

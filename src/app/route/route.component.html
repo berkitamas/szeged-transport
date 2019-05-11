@@ -6,16 +6,16 @@
   <h3 class="title" *ngIf="route.description.length > 0">
     {{ route.description }}
   </h3>
-  <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center">
+  <div class="flex" fxLayout="row wrap" fxLayoutGap.gt-sm="10px" fxLayoutAlign="center">
     <div fxFlex.gt-sm="30" fxFlex.lt-md="100" class="flex-item">
       <mat-card>
         <mat-card-header>
           <mat-card-title>Megállók</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <div *ngIf="route.stops[0].name === route.stops[route.stops.length - 1].name; else notCircular">
+          <div *ngIf="route.stopsTo.length === 0; else notCircular">
             <mat-nav-list class="circular">
-              <div *ngFor="let stop of route.stops; let i = index" [attr.data-index]="i">
+              <div *ngFor="let stop of route.stopsFrom; let i = index" [attr.data-index]="i">
                 <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button><span fxFlex="80">{{ stop.name }}</span><span class="min-offset" fxFlex="grow">+{{ stop.minOffset }} perc</span></a>
               </div>
             </mat-nav-list>
@@ -24,15 +24,15 @@
             <mat-tab-group mat-stretch-tabs>
               <mat-tab label="Oda">
                 <mat-nav-list>
-                  <div *ngFor="let stop of route.stops; let i = index" [attr.data-index]="i">
+                  <div *ngFor="let stop of route.stopsFrom; let i = index" [attr.data-index]="i">
                     <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button><span fxFlex="80">{{ stop.name }}</span><span class="min-offset" fxFlex="grow">+{{ stop.minOffset }} perc</span></a>
                   </div>
                 </mat-nav-list>
               </mat-tab>
               <mat-tab label="Vissza">
                 <mat-nav-list>
-                  <div *ngFor="let stop of route.stops.slice().reverse(); let i = index" [attr.data-index]="i">
-                    <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> <span fxFlex="80">{{ stop.name }}</span> <span fxFlex="grow"></span><span class="min-offset" fxFlex="grow">+{{ route.stops[route.stops.length - 1].minOffset - stop.minOffset }} perc</span></a>
+                  <div *ngFor="let stop of route.stopsTo; let i = index" [attr.data-index]="i">
+                    <a mat-list-item [routerLink]="'/stops/'+stop.id"><button mat-mini-fab [disabled]="true">{{i + 1}}.</button> <span fxFlex="80">{{ stop.name }}</span> <span fxFlex="grow"></span><span class="min-offset" fxFlex="grow">+{{ stop.minOffset }} perc</span></a>
                   </div>
                 </mat-nav-list>
               </mat-tab>
@@ -43,7 +43,7 @@
     </div>
     <div fxFlex.gt-sm="60" fxFlex.lt-md="100" class="flex-item">
       <agm-map [zoom]="12" [latitude]="46.251984" [longitude]="20.152332">
-        <agm-marker *ngFor="let stop of route.stops"
+        <agm-marker *ngFor="let stop of route.stopsFrom"
                     [latitude]="stop.lat" [longitude]="stop.lon"
                     [agmFitBounds]="true">
         </agm-marker>
@@ -55,7 +55,7 @@
         <mat-accordion *ngIf="stops.length > 0; else noStop">
           <mat-expansion-panel *ngFor="let stop of stops">
             <mat-expansion-panel-header>
-              <mat-panel-title fxFlex="10">
+              <mat-panel-title fxFlex.gt-sm="10" fxFlex.lt-md="20">
                 <div [appTimeCounter]="stop.arrivalTime" (value)="time[stop.currentStop.id*stop.arrivalTime.getTime()] = $event">
                   <button mat-flat-button disabled> {{ time[stop.currentStop.id*stop.arrivalTime.getTime()] | date:'mm:ss' }} </button>
                 </div>

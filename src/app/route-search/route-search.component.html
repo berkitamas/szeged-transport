@@ -1,3 +1,8 @@
 <p>
-  route-search works!
+  <mat-form-field>
+    <mat-label>Járat típusa</mat-label>
+    <mat-select multiple>
+      <mat-option *ngFor="let type of transportTypes" [value]="type.value">{{type.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </p>
