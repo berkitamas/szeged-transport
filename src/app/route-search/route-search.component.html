@@ -1,8 +1,17 @@
-<p>
-  <mat-form-field>
-    <mat-label>Járat típusa</mat-label>
-    <mat-select multiple>
-      <mat-option *ngFor="let type of transportTypes" [value]="type.value">{{type.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</p>
+<mat-card class="search">
+  <mat-card-header>
+    <mat-card-title>Járatok keresése</mat-card-title>
+  </mat-card-header>
+</mat-card>
+<mat-card class="results" *ngIf="searchResults$ | async as searchResults">
+  <mat-card-header>
+    <mat-card-title>Keresési találatok</mat-card-title>
+    <mat-card-subtitle>{{ searchResults.length }} darab</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-nav-list *ngFor="let route of searchResults">
+      <a mat-list-item [routerLink]="'/routes/' + route.id"><span [ngClass]="['route', getClassFromTransportType(route.type)]">{{route.shortName}}</span>{{route.longName}}</a>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>
+

@@ -3,6 +3,8 @@ import {RouteService} from '../core/services/route.service';
 import {RouteSearch} from '../core/models/route-search';
 import {TransportType} from '../core/models/transport-type';
 import {Stop} from '../core/models/stop';
+import {Observable} from 'rxjs';
+import {Route} from '../core/models/route';
 
 @Component({
   selector: 'app-route-search',
@@ -11,11 +13,7 @@ import {Stop} from '../core/models/stop';
 })
 export class RouteSearchComponent implements OnInit {
 
-  private transportTypes = [
-    {name: 'Villamos', value: TransportType.TRAM},
-    {name: 'Trolibusz', value: TransportType.TROLLEY},
-    {name: 'Busz', value: TransportType.BUS},
-  ];
+  searchResults$: Observable<Route[]>;
 
   constructor(private routeService: RouteService) { }
 
@@ -29,4 +27,16 @@ export class RouteSearchComponent implements OnInit {
     })).subscribe(console.log);
   }
 
+  getClassFromTransportType(type: TransportType) {
+    switch (type) {
+      case TransportType.TROLLEY:
+        return 'trolley';
+      case TransportType.TRAM:
+        return 'tram';
+      case TransportType.BUS:
+        return 'bus';
+      default:
+        return '';
+    }
+  }
 }
