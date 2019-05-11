@@ -74,10 +74,10 @@ export class RouteService {
     if (routeSearch.fromTime) {
       query += '&from-time=' + Math.floor((routeSearch.fromTime).getTime() / 1000);
     }
-    if (routeSearch.stops) {
+    if (routeSearch.stops && routeSearch.stops.length > 0) {
       query += '&stops=' + routeSearch.stops.map(value => value.id).join(',');
     }
-    if (routeSearch.types) {
+    if (routeSearch.types && routeSearch.types.length > 0) {
       const types = routeSearch.types.map(type => {
         switch (type) {
           case TransportType.BUS: return 'bus';

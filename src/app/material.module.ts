@@ -9,8 +9,10 @@ import {
   MatSidenavModule,
   MatTabsModule,
   MatToolbarModule,
-  MatInputModule
+  MatInputModule, MatDatepickerModule, MatSlideToggleModule
 } from '@angular/material';
+import {MatDatetimepickerModule} from '@mat-datetimepicker/core';
+import {MatMomentDatetimeModule} from '@mat-datetimepicker/moment';
 
 @NgModule({
   imports: [
@@ -30,7 +32,11 @@ import {
     MatFormFieldModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatMomentDatetimeModule,
+    MatDatetimepickerModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatToolbarModule,
@@ -49,7 +55,11 @@ import {
     MatFormFieldModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatMomentDatetimeModule,
+    MatDatetimepickerModule,
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule { }

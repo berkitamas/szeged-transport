@@ -27,8 +27,7 @@
             #routeInput
             formControlName="routePickInput"
             [matAutocomplete]="routePickAuto"
-            [matChipInputFor]="routeList"
-            [matChipInputSeparatorKeyCodes]="separatorKeyCodes">
+            [matChipInputFor]="routeList">
         </mat-chip-list>
         <mat-autocomplete #routePickAuto="matAutocomplete" (optionSelected)="selectRoute($event)">
           <mat-option *ngIf="loadingRoute" class="mat-option-loading"><mat-spinner diameter="40"></mat-spinner></mat-option>

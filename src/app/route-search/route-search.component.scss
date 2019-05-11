@@ -17,6 +17,15 @@ mat-card.results {
   margin-top: 10px;
 }
 
+.mat-option-loading mat-spinner {
+  margin: 0 auto;
+}
+
+
+form>* {
+  margin-bottom: 10px;
+}
+
 .route {
   display: inline-block;
   line-height: 30px;
@@ -24,7 +33,6 @@ mat-card.results {
   text-align: center;
   font-weight: bold;
   font-size: 1em;
-  margin-top: 10px;
   color: white;
   border-radius: 3px;
   margin-right: 10px;

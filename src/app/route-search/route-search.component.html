@@ -2,6 +2,69 @@
   <mat-card-header>
     <mat-card-title>Járatok keresése</mat-card-title>
   </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="routeSearchForm" (ngSubmit)="searchRoutes()" fxLayout="row wrap" fxLayoutGap="10px">
+      <mat-form-field fxFlex="calc2Cols">
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <input matInput formControlName="routeLongName" placeholder="Járat teljes neve" />
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <mat-label>Járat típusa</mat-label>
+        <mat-select multiple formControlName="routeTypes">
+          <mat-option *ngFor="let type of transportTypes" [value]="type.value">{{type.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <mat-placeholder>Járatok ettől</mat-placeholder>
+        <mat-datetimepicker-toggle [for]="fromDatePicker" matSuffix></mat-datetimepicker-toggle>
+        <mat-datetimepicker #fromDatePicker type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <input matInput formControlName="fromTime" [matDatetimepicker]="fromDatePicker" autocomplete="false">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <mat-placeholder>Járatok eddig</mat-placeholder>
+        <mat-datetimepicker-toggle [for]="toDatePicker" matSuffix></mat-datetimepicker-toggle>
+        <mat-datetimepicker #toDatePicker type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <input matInput formControlName="toTime" [matDatetimepicker]="toDatePicker" autocomplete="false">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <mat-chip-list #stopList>
+          <!--suppress AngularInvalidExpressionResultType -->
+          <mat-chip
+            *ngFor="let stop of selectedStops"
+            [selectable]="false"
+            [removable]="true"
+            (removed)="removeStopFromList(stop)">
+            {{stop.name}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <!--suppress HtmlFormInputWithoutLabel -->
+          <input
+            placeholder="Érintett megállók"
+            #stopInput
+            formControlName="stopPickInput"
+            [matAutocomplete]="stopPickAuto"
+            [matChipInputFor]="stopList">
+        </mat-chip-list>
+        <mat-autocomplete #stopPickAuto="matAutocomplete" (optionSelected)="selectStop($event)">
+          <mat-option *ngIf="loadingStops" class="mat-option-loading"><mat-spinner diameter="40"></mat-spinner></mat-option>
+          <ng-container *ngIf="!loadingStops">
+            <mat-option *ngFor="let stop of filteredStops" [value]="stop">
+              {{stop.name}}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div fxFlex="grow">
+        <mat-slide-toggle formControlName="wheelchairAccessible">Csak kerekesszékes felszállási lehetőséget nyújtó járatok</mat-slide-toggle>
+      </div>
+      <div fxFlex="grow">
+        <mat-slide-toggle formControlName="occasional">Tartalmazza a különjáratokat</mat-slide-toggle>
+      </div>
+      <button type="submit" mat-raised-button color="primary">Keresés</button>
+    </form>
+  </mat-card-content>
 </mat-card>
 <mat-card class="results" *ngIf="searchResults$ | async as searchResults">
   <mat-card-header>
@@ -14,4 +77,5 @@
     </mat-nav-list>
   </mat-card-content>
 </mat-card>
+
 

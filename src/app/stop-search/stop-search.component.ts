@@ -75,7 +75,7 @@ export class StopSearchComponent implements OnInit {
   }
 
   addRouteToList(route: Route) {
-    if (this.selectedRoutes.filter(value => value.id === route.id).length === 0) {
+    if (!this.isRouteInList(route)) {
       this.selectedRoutes.push(route);
       this.routeInput.nativeElement.value = '';
     }
@@ -88,7 +88,6 @@ export class StopSearchComponent implements OnInit {
   selectRoute(event: MatAutocompleteSelectedEvent) {
     this.addRouteToList(event.option.value);
     this.stopSearchForm.controls.routePickInput.setValue('');
-    this.routeInput.nativeElement.value = '';
   }
 
   getClassFromTransportType(type: TransportType) {
