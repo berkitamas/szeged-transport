@@ -29,13 +29,13 @@ export class RouteService {
       .pipe(map((array: any[]) => array.map(value => {
         let type: TransportType;
         switch (value.type) {
-          case 'Villamos':
+          case 1:
             type = TransportType.TRAM;
             break;
-          case 'Busz':
+          case 2:
             type = TransportType.BUS;
             break;
-          case 'Trolibusz':
+          case 3:
             type = TransportType.TROLLEY;
             break;
           default:
@@ -122,13 +122,13 @@ export class RouteService {
       .pipe(map((value: any) => {
         let type: TransportType;
         switch (value.type) {
-          case 'Villamos':
+          case 1:
             type = TransportType.TRAM;
             break;
-          case 'Busz':
+          case 2:
             type = TransportType.BUS;
             break;
-          case 'Trolibusz':
+          case 3:
             type = TransportType.TROLLEY;
             break;
           default:
