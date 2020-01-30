@@ -48,7 +48,7 @@ import { LoadingComponent } from './loading/loading.component';
     FormsModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAcsNk5FNfk-QksDo--9PyJs4dfjTWBMEk'
+      apiKey: 'AIzaSyBchn3zBn1_KLSfLuUkb00-i5gQaZLuUnE'
     }),
     BrowserAnimationsModule
   ],
