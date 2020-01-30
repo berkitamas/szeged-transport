@@ -23,7 +23,7 @@ pipeline {
       }
       steps {
         sh 'npm install'
-        sh 'npm install @angular/cli'
+        sh 'npm install @angular/cli^6.0.0'
         stash name: 'node_project'
       }
     }
